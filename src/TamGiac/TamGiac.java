@@ -20,6 +20,9 @@ public class TamGiac {
     public Diem TimTrongTam(){
         return new Diem((this.A.getX() + this.B.getX() + this.C.getX()) / 3 , (this.A.getY() + this.B.getY() + this.C.getY()) / 3);
     }
+    public double ChuVi(){
+        return A.Distance(B) + B.Distance(C) + C.Distance(A);
+    }
     @Override
     public String toString(){
         return "Tam Giac: " + this.A + " , " + this.B + " , "+ this.C;

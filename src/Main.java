@@ -1,11 +1,18 @@
 import TamGiac.TamGiac;
 import Diem.Diem;
 
-
 import java.util.Scanner;
 import java.util.Vector;
+import java.lang.Double;
+import java.io.IOException;
 
 public class Main {
+    private static void clearConsole(){
+        try {
+            if (System.getProperty("os.name").contains("Windows")) new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else Runtime.getRuntime().exec("clear");
+        } catch (IOException | InterruptedException ex) {System.out.println("Clean Screen Error...");}
+    }
     public static void main(String[] args)  throws java.io.IOException{
         Scanner CMDInput = new Scanner(System.in);
         Vector<TamGiac> List = new Vector<TamGiac>();
@@ -28,7 +35,7 @@ public class Main {
 
             UserInput = CMDInput.nextLine();
             if (UserInput.equals("Q") || UserInput.equals("q")) break;
-
+            clearConsole();
             switch (UserInput) {
                 case "1" -> {
                     System.out.println("Danh sach tam giac:");
@@ -62,6 +69,49 @@ public class Main {
                     List.add(new TamGiac(A, B, C));
                     System.out.println("Them tam giac thanh cong...");
                     CMDInput.nextLine();
+                }
+                case "3" -> {
+                    System.out.print("Tong chu vi cua cac tam giac la:");
+                    double res = 0;
+                    for (TamGiac i: List){
+                        res += i.ChuVi();
+                    }
+                    System.out.println(" " + res);
+                }
+                case "4" -> {
+                    double Max = -1;
+                    TamGiac res = new TamGiac();
+                    for (TamGiac i: List){
+                        if (i.ChuVi() > Max) {
+                            res = i;
+                            Max = i.ChuVi();
+                        }
+                    }
+                    System.out.print("Tam giac co chu vi lon nhat:\n");
+                    System.out.println(res);
+                    System.out.print("Chu vi tam giac la:" + Max);
+                }
+                case "5" -> {
+                    double Min = Double.MAX_VALUE;
+                    TamGiac res = new TamGiac();
+                    for (TamGiac i: List){
+                        if (i.ChuVi() > Min) {
+                            res = i;
+                            Min = i.ChuVi();
+                        }
+                    }
+                    System.out.print("Tam giac co chu vi nho nhat:\n");
+                    System.out.println(res);
+                    System.out.print("Chu vi tam giac la:" + Min);
+                }
+                case "6" -> {
+                    System.out.print("Nhap x = ");
+                    double x = CMDInput.nextDouble();
+                    CMDInput.nextLine();
+                    System.out.println("Danh sach cac tam giac nho hon " + x + " la: ");
+                    for (TamGiac i: List){
+                        if (i.ChuVi() < x) System.out.println(i + " chu vi la: " + (double) (Math.round(i.ChuVi() * 100) / 100));
+                    }
                 }
                 case "7" -> {
                     System.out.print("Nhap tam giac muon tim trong tam: ");
